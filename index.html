@@ -14,13 +14,13 @@
     </div>
 
     <img id="fish" src="fish.jpg" alt="Fish">
-    <button onclick="fish.classList.toggle('spin')">Spin the fish!</button>
+    <button class="toggle-button" onclick="document.getElementById('fish').classList.toggle('spin')">Spin the fish!</button>
 
     <div class="ai">
         <strong style="color:black">FishAI™</strong>
         <div id="ai-message" style="font-size: 12px; margin: 8px 0; color: #656262; max-width: 140px;">How can I help with your fish?</div>
         <input id="ai-in" type="text" placeholder="Message..." style="width: 90px;">
-        <button onclick="document.getElementById('ai-message').innerText = 'Glub.'; document.getElementById('ai-in').value='';" style="margin:0; padding:4px 8px; font-size:12px;">Ask</button>
+        <button id="ai-button" onclick="askFishAI()">Ask</button>
     </div>
 </body>
 </html>

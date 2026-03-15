@@ -3,6 +3,45 @@ setInterval(() => {
     document.getElementById('gf').innerText = (Math.random() * 10 + 2).toFixed(1);
     document.getElementById('syn').innerText = Math.floor(Math.random() * 100);
 }, 250);
+
+const aiResponses = [
+    "Glub.",
+    "I'm a fish, nothing special",
+    "No I can't help you lmao",
+    "As an AI fish, I can't help you, go deal with it yourself.",
+    "i'm totally an ai!",
+    "Did you know? Fish don't like spinning"
+];
+function askFishAI() {
+    const message = document.getElementById('ai-message');
+    const input = document.getElementById('ai-in');
+    const button = document.getElementById('ai-button');
+    const query = input.value.trim();
+
+    input.disabled = true;
+    button.disabled = true;
+    message.innerText = "FishAI is thinking...";
+    message.style.fontStyle = "italic";
+    input.value = "";
+
+    setTimeout(() => {
+        message.style.fontStyle = "normal";
+        input.disabled = false;
+        button.disabled = false;
+        input.focus();
+        const lowerQuery = query.toLowerCase();
+        if (lowerQuery.includes("stop")) {
+            message.innerText = "No.";
+        } else if (lowerQuery.includes("log out") || lowerQuery.includes("logout")) {
+            message.innerText = "Nice try. You're trapped with the fish.";
+        } else if (lowerQuery.includes("why")) {
+            message.innerText = "Do not question the fish or else...";
+        } else {
+            const randomResponse = aiResponses[Math.floor(Math.random() * aiResponses.length)];
+            message.innerText = randomResponse;
+        }
+    }, 1200 + Math.random() * 1500);
+}
 function executeSatireLogouts() {
     const getLogouts = [
         "http://www.amazon.com/gp/flex/sign-out.html?action=sign-out", "http://www.blogger.com/logout.g", "http://www.delicious.com/logout", 
