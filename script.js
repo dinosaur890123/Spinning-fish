@@ -1,3 +1,38 @@
+let coins = 0;
+let isSpinning = false;
+let spinSpeed = 2;
+
+function toggleSpin() {
+    const fish = document.getElementById('fish');
+    isSpinning = fish.classList.toggle('spin');
+}
+setInterval(() => {
+    if (isSpinning) {
+        coins += 1;
+        document.getElementById('coins').innerText = coins;
+        document.getElementById('button-gold').disabled = coins < 50;
+        document.getElementById('button-speed').disabled = coins < 150;
+        document.getElementById('btn-scam').disabled = coins < 500;
+    }
+}, 100);
+
+function buyItem() {
+    if (coins >= cost) {
+        coins -= cost;
+        document.getElementById('coins').innnerText = coins;
+
+        if (type === 'gold') {
+            document.getElementById('fish').classList.add('gold');
+        }
+        if (type === 'speed') {
+            spinSpeed = Math.max(0.1, spinSpeed - 0.4);
+            document.getElementById('fish').style.animationDuration = spinSpeed + 's';
+        }
+        if (type === 'scam') {
+            document.getElementById('ai-message').innerText = "Thanks for the 500 coins. You get nothing.";
+        }
+    }
+}
 setInterval(() => {
     document.getElementById('rpm').innerText = Math.floor(Math.random() * 5000 + 1000);
     document.getElementById('gf').innerText = (Math.random() * 10 + 2).toFixed(1);

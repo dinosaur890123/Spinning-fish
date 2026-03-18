@@ -28,6 +28,9 @@ button.toggle-button:hover {background: #5e5b5b;}
 #fish {
     cursor: pointer;
     transition: transform 0.2s;
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
 }
 #fish:active {
     transform: scale(0.95);
@@ -67,4 +70,23 @@ button.toggle-button:hover {background: #5e5b5b;}
 }
 .ai button:hover {
     background: #0056b3;
+}
+#shop {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    background: #252424;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+}
+#shop-button {
+    background: #4a4848;
+    color: white;
+    border: none;
+    padding: 5px;
+    margin-top: 5px;
+    cursor: pointer;
+    margin-top: 5px;
+    
 }
