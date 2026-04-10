@@ -8,6 +8,8 @@
 </head>
 <body>
     <div class="dash">
+        <div>Coins: <span id="coins">0</span></div>
+        <div>Coins/sec: <span id="cps">0.0</span></div>
         <div>Fish RPM: <span id="rpm">0</span></div>
         <div>G-Force: <span id="gf">0</span>G</div>
         <div>Synergy: <span id="syn">0</span>%</div>
@@ -17,6 +19,8 @@
         <strong>Spin Shop</strong><br>
         <button id="button-gold" onclick="buyItem(50, 'gold')" disabled>Gold Fish (50)</button>
         <button id="button-speed" onclick="buyItem(150, 'speed')" disabled>Hyper Speed (150)</button>
+        <button id="button-multi" onclick="buyItem(200, 'multi')" disabled>Coin multiplier (200)</button>
+        <button id="button-auto" onclick="buyItem(300, 'auto')" disabled>Auto Spin (300)</button>
         <button id="button-scam" onclick="buyItem(500, 'scam')" disabled>Mystery (500)</button>
     </div>
 
