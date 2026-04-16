@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div id="fall-layer"></div>
+    <div id="disaster-box">
+    <div>Disaster Meter: <span id="disaster-value">0%</span></div>
+        <div id="disaster-bar">
+        <div id="disaster-fill"></div>
+    </div>
+    </div>
     <div class="dash">
         <div>Coins: <span id="coins">0</span></div>
         <div>Coins/sec: <span id="cps">0.0</span></div>
@@ -25,7 +32,7 @@
     </div>
 
     <img id="fish" src="fish.jpg" alt="Fish">
-    <button class="toggle-button" onclick="document.getElementById('fish').classList.toggle('spin')">Spin the fish!</button>
+    <button class="toggle-button" onclick="toggleSpin()">Spin the fish!</button>
 
     <div class="ai">
         <strong style="color:black">FishAI™</strong>

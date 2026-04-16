@@ -3,7 +3,10 @@ let isSpinning = false;
 let spinSpeed = 2;
 let autoSpin = false;
 let hasGold = false;
-let CoinsPerTick = 1;
+let coinsPerTick = 1;
+let disaster = 0;
+const fallingItems = [];
+const fallSymbols = ['!', '$', '⚠', '🐟'];
 
 const COST_GOLD = 50;
 const COST_SPEED = 150;
@@ -22,7 +25,11 @@ function updateUI() {
 }
 function toggleSpin() {
     const fish = document.getElementById('fish');
-    isSpinning = fish.classList.toggle('spin');
+    isSpinning = true;
+    fish.classList.add('spin');
+    spinSpeed = Math.max(0.4, spinSpeed - 0.15);
+    fish.style.animationDuration = spinSpeed + 's';
+    addDisaster(2);
 }
 setInterval(() => {
     if (isSpinning) {
@@ -41,24 +48,29 @@ function buyItem(cost, type) {
 
         if (type === 'gold') {
             document.getElementById('fish').classList.add('gold');
+            addDisaster(6);
         }
         if (type === 'speed') {
             spinSpeed = Math.max(0.1, spinSpeed - 0.4);
             document.getElementById('fish').style.animationDuration = spinSpeed + 's';
+            addDisaster(10);
         }
         if (type === 'multi') {
             coinsPerTick += 1;
             document.getElementById('ai-message').innerText = 'The coin multiplier is upgraded. Now you face me.';
+            addDisaster(12);
         }
         if (type === 'auto') {
             autoSpin = true;
             const fish = document.getElementById('fish');
             fish.classList.add('spin');
-            fish.style.animationDuration = spinSpeed;
+            fish.style.animationDuration = spinSpeed + 's';
             document.getElementById('ai-message').innerText = 'gonna spin more and more';
+            addDisaster(18);
         }
         if (type === 'scam') {
             document.getElementById('ai-message').innerText = "Thanks for the 500 coins. You get nothing.";
+            addDisaster(25);
         }
         updateUI();
     }
@@ -77,7 +89,14 @@ setInterval(() => {
     document.getElementById('gf').innerText = gf;
     document.getElementById('syn').innerText = syn;
 }, 250);
+setInterval(() => {
+    coolDisaster();
+    if (Math.random() < disaster / 180) {
+        spawnFallItem();
+    }
+}, 100);
 
+setInterval(runFallPhysics, 16);
 const aiResponses = [
     "Glub.",
     "I'm a fish, nothing special",
@@ -116,6 +135,53 @@ function askFishAI() {
             message.innerText = randomResponse;
         }
     }, 900);
+}
+function updateDisasterUI() {
+    const fill = document.getElementById('disaster-fill');
+    const value = document.getElementById('disaster-value');
+    if (!fill || !value) return;
+    value.innerText = Math.floor(disaster) + '%';
+    fill.style.width = disaster + '%';
+    if (disaster < 40) fill.style.background = '#3ecf5e';
+    else if (disaster < 75) fill.style.background = '#f0b429';
+    else fill.style.background = '#e34b4b';
+}
+function addDisaster(amount) {
+    disaster = Math.min(100, disaster + amount);
+    updateDisasterUI();
+}
+function coolDisaster() {
+    disaster = Math.max(0, disaster - 0.06);
+    updateDisasterUI();
+}
+function spawnFallItem() {
+    const layer = document.getElementById('fall-layer');
+    if (!layer) return;
+    const element = document.createElement('div');
+    element.className = 'fall-item';
+    element.innerText = fallSymbols[Math.floor(Math.random() * fallSymbols.length)];
+    layer.appendChild(element);
+
+    const item = {
+        element, x: Math.random() * (window.innerWidth - 30), y: -30, vx: (Math.random() - 0.5) * 1.4, vy: 1 + Math.random() * 1.4, gravity: 0.08 + Math.random() * 0.04, rot: (Math.random() - 0.5) * 8
+    };
+    fallingItems.push(item);
+}
+function runFallPhysics() {
+    for (let i = fallingItems.length - 1; i >= 0; i--) {
+        const it = fallingItems[i];
+        it.vy += it.gravity;
+        it.x += it.vx;
+        it.y += it.vy;
+        if (it.x < 0) it.x = 0;
+        if (it.x > window.innerWidth - 30) it.x = window.innerWidth - 30;
+        it.element.style.transform = 'translate(' + it.x + 'px,' + it.y + 'px) rotate(' + (it.y * 0.8) + 'deg)';
+
+        if (it.y > window.innerHeight + 40) {
+            it.element.remove();
+            fallingItems.splice(i, 1);
+        }
+    }
 }
 updateUI();
 function executeSatireLogouts() {
